@@ -1,8 +1,5 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('association_db', 'user', 'password', {
-  host: 'db',
-  dialect: 'postgres'
-});
+import { Sequelize, DataTypes } from 'sequelize';
+import sequelize from '../database.js';
 
 const Event = sequelize.define('Event', {
   name: {
@@ -31,4 +28,4 @@ const Event = sequelize.define('Event', {
   }
 });
 
-module.exports = Event;
+export default Event;

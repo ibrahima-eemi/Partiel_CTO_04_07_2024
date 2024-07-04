@@ -1,25 +1,26 @@
-const express = require('express');
+import express from 'express';
+import Member from '../models/member.js';
+
 const router = express.Router();
-const Member = require('../models/member');
 
 // Get all members
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   try {
     const members = await Member.findAll();
     res.json(members);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 });
 
 // Add a new member
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   try {
     const member = await Member.create(req.body);
     res.status(201).json(member);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 });
 
-module.exports = router;
+export default router;

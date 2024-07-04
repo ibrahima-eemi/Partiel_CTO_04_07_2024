@@ -1,8 +1,5 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('association_db', 'user', 'password', {
-  host: 'db',
-  dialect: 'postgres'
-});
+import { Sequelize, DataTypes } from 'sequelize';
+import sequelize from '../database.js';
 
 const Member = sequelize.define('Member', {
   first_name: {
@@ -38,4 +35,4 @@ const Member = sequelize.define('Member', {
   }
 });
 
-module.exports = Member;
+export default Member;
