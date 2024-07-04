@@ -16,7 +16,7 @@
     "scripts": {
       "start": "node server.js",
       "pretest": "node scripts/recreate-tables.js",
-      "test": "DB_HOST=db DB_PORT=5432 DB_NAME=association_test_db DB_USER=user DB_PASSWORD=password mocha 'test/**/*.test.js'"
+      "test": "DB_HOST=localhost DB_PORT=5432 DB_NAME=association_test_db DB_USER=user DB_PASSWORD=password mocha 'test/**/*.test.js'"
     }
   }
   

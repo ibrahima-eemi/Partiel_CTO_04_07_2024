@@ -1,33 +1,23 @@
+import Sequelize from 'sequelize';
 import sequelize from '../database.js';
-import Member from '../models/member.js';
-import Event from '../models/event.js';
+import { up as createMembersTable } from '../migrations/20240704-create-members-table.js';  // Vérifiez que le nom de fichier correspond
 
-const waitForPostgres = async () => {
-  const retries = 5;
-  const delay = 3000; // 3 seconds
-  for (let i = 0; i < retries; i++) {
-    try {
-      await sequelize.authenticate();
-      console.log('Database connected');
-      return;
-    } catch (err) {
-      console.log(`Database connection failed, retrying in ${delay / 1000} seconds...`);
-      await new Promise(res => setTimeout(res, delay));
-    }
-  }
-  throw new Error('Database connection failed after multiple retries');
-};
-
-const recreateTables = async () => {
+(async () => {
   try {
-    await waitForPostgres();
-    await sequelize.sync({ force: true });
-    console.log('All tables recreated successfully.');
+    await sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+
+    // Drop all tables (for recreation purposes)
+    await sequelize.drop();
+    console.log('All tables dropped.');
+
+    // Run migration scripts
+    await createMembersTable(sequelize.getQueryInterface(), Sequelize);
+    console.log('All tables created successfully.');
+
     process.exit(0);
   } catch (error) {
-    console.error('Error recreating tables:', error);
+    console.error('Unable to connect to the database:', error);
     process.exit(1);
   }
-};
-
-recreateTables();
+})();

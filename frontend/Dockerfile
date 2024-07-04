@@ -1,13 +1,17 @@
-FROM node:14
+# Utiliser une image Node.js officielle pour construire l'application
+FROM node:14 as build
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY package*.json ./
-
 RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+RUN npm run build
 
-CMD ["npm", "start"]
+# Utiliser une image nginx officielle pour servir l'application
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+
+EXPOSE 80

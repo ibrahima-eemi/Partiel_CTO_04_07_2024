@@ -1,5 +1,7 @@
-const express = require('express');
-const { Sequelize } = require('sequelize');
+import express from 'express';
+import { Sequelize } from 'sequelize';
+import memberRoutes from './routes/members.js';
+import eventRoutes from './routes/events.js';
 
 const app = express();
 const port = 5000;
@@ -14,9 +16,6 @@ const sequelize = new Sequelize('association_db', 'user', 'password', {
 app.use(express.json());
 
 // Routes
-const memberRoutes = require('./routes/members'); // Vérifiez ce chemin
-const eventRoutes = require('./routes/events'); // Vérifiez ce chemin
-
 app.use('/api/members', memberRoutes);
 app.use('/api/events', eventRoutes);
 
